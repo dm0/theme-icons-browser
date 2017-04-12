@@ -1,9 +1,12 @@
+#include <QStyledItemDelegate>
+
 #include <QDebug>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 #include "icontheme.h"
+#include "icondelegate.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,6 +19,10 @@ MainWindow::MainWindow(QWidget *parent) :
         qDebug() << "Loading: " << theme;
         themes.insert(theme, IconTheme(theme));
     }
+    model = new ThemeIconsModel(themes, QString(), this);
+    ui->listView->setModel(model);
+    IconDelegate * delegate = new IconDelegate(ui->listView);
+    ui->listView->setItemDelegate(delegate);
 }
 
 MainWindow::~MainWindow()

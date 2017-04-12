@@ -28,7 +28,7 @@ public:
         QString path; /**< path relative to theme root */
     };
 
-    IconTheme(const QString &theme_name);
+    IconTheme(const QString &theme_name=QString());
     /**
      * @brief Parent theme name
      * @return Parent theme name (can be Null)

@@ -12,6 +12,9 @@ QStringList IconTheme::base_dirs = get_base_dirs();
 
 IconTheme::IconTheme(const QString &theme_name): theme_name(theme_name)
 {
+    if (theme_name.isNull()) {
+        return;
+    }
     for (const QString &dir: base_dirs) {
         if (!QFileInfo::exists(QString("%1/%2/index.theme").arg(dir).arg(theme_name))) {
             continue;
@@ -47,9 +50,9 @@ IconTheme::IconTheme(const QString &theme_name): theme_name(theme_name)
     // load icons
     for (int i = 0, len = theme_dirs.size(); i < len; i++) {
         QDir dir(base_path + "/" + theme_dirs[i].path);
-        for (const QFileInfo &icon: dir.entryInfoList(QDir::Files | QDir::Readable)) {
+        for (const QFileInfo &icon: dir.entryInfoList({"*.png", "*.svg", "*.xpm"}, QDir::Files | QDir::Readable)) {
             QString icon_name = icon.completeBaseName();
-            theme_icons[icon_name] += i;
+            theme_icons[icon_name] += static_cast<uint>(i);
         }
     }
 }

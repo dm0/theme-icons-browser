@@ -28,10 +28,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     icontheme.cpp \
-    themeiconsmodel.cpp
+    themeiconsmodel.cpp \
+    icondelegate.cpp
 
 HEADERS  += mainwindow.h \
     icontheme.h \
-    themeiconsmodel.h
+    themeiconsmodel.h \
+    icondelegate.h
 
 FORMS    += mainwindow.ui

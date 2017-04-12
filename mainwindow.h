@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "themeiconsmodel.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -17,6 +19,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    ThemeIconsModel * model;
 };
 
 #endif // MAINWINDOW_H
