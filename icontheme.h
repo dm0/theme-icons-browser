@@ -7,6 +7,9 @@
 #include <QSet>
 #include <QVector>
 
+/**
+ * @brief The IconTheme class contains information about single icon theme
+ */
 class IconTheme {
 
 public:
@@ -32,6 +35,13 @@ public:
      */
     const QStringList & parents() const { return parent_themes; }
 
+    /**
+     * @brief Returns mapping of theme icons names to Directory indices.
+     *
+     * For each icon name in the mapping there is a set of directory indices. Each index is an
+     * index of Directory object in the vector returned by the `dirs()` method.
+     * @return Icon names to Directory indices
+     */
     const QHash<QString, QSet<uint>> & icons() const { return theme_icons; }
 
     const QVector<Directory> & dirs() const { return theme_dirs; }
@@ -41,7 +51,7 @@ public:
      * @return List of installed icon themes
      */
     static QStringList themes();
-    // TODO: return icon directories as icon information
+
 protected:
     QStringList parent_themes; /**< parent theme name */
     QString theme_name; /**< theme name (directory name) */

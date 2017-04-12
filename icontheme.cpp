@@ -28,11 +28,11 @@ IconTheme::IconTheme(const QString &theme_name): theme_name(theme_name)
     display_name = theme_index.value("Name").toString();
     parent_themes = theme_index.value("Inherits").toStringList();
     QStringList dir_list = theme_index.value("Directories").toStringList();
-    dirs.reserve(dir_list.size());
+    theme_dirs.reserve(dir_list.size());
     for (const QString &dir: dir_list) {
         theme_index.beginGroup(dir);
         int size = theme_index.value("Size", 0).toInt();
-        dirs.append(Directory{
+        theme_dirs.append(Directory{
             size,
             theme_index.value("Scale", 1).toInt(),
             theme_index.value("Context", "").toString(),
@@ -45,11 +45,11 @@ IconTheme::IconTheme(const QString &theme_name): theme_name(theme_name)
         theme_index.endGroup();
     }
     // load icons
-    for (int i = 0, len = dirs.size(); i < len; i++) {
-        QDir dir(base_path + "/" + dirs[i].path);
+    for (int i = 0, len = theme_dirs.size(); i < len; i++) {
+        QDir dir(base_path + "/" + theme_dirs[i].path);
         for (const QFileInfo &icon: dir.entryInfoList(QDir::Files | QDir::Readable)) {
             QString icon_name = icon.completeBaseName();
-            icons[icon_name] += i;
+            theme_icons[icon_name] += i;
         }
     }
 }
