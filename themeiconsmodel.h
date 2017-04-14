@@ -15,6 +15,8 @@ public:
                     QObject *parent=nullptr);
     virtual int rowCount(const QModelIndex &parent=QModelIndex()) const override;
     virtual QVariant data(const QModelIndex &index, int role=Qt::DisplayRole) const override;
+public slots:
+	void set_current_theme(QString theme);
     // TODO: set new themes
     // TODO: set current theme
 protected:
