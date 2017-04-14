@@ -3,6 +3,7 @@
 
 #include <QAbstractListModel>
 #include <QHash>
+#include <QIcon>
 
 #include "icontheme.h"
 
@@ -20,6 +21,7 @@ protected:
     QHash<QString, IconTheme> icon_themes;
     QList<QString> icon_names;
     QString selected_theme;
+    mutable QHash<QString, QIcon> icon_cache;
 };
 
 #endif // THEMEICONSMODEL_H

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "themeiconsmodel.h"
+#include "icondelegate.h"
 
 namespace Ui {
 class MainWindow;
@@ -20,6 +21,7 @@ public:
 private:
     Ui::MainWindow *ui;
     ThemeIconsModel * model;
+    IconDelegate * view_delegate;
 };
 
 #endif // MAINWINDOW_H

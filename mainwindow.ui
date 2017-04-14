@@ -45,13 +45,13 @@
     <enum>QListView::Batched</enum>
    </property>
    <property name="spacing">
-    <number>7</number>
+    <number>11</number>
    </property>
    <property name="viewMode">
     <enum>QListView::IconMode</enum>
    </property>
    <property name="uniformItemSizes">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="batchSize">
     <number>200</number>

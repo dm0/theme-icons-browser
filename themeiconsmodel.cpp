@@ -42,10 +42,14 @@ QVariant ThemeIconsModel::data(const QModelIndex &index, int role) const
         case Qt::ToolTipRole:
             return icon_names.at(row);
         case Qt::DecorationRole: {
+            const QString &name = icon_names.at(row);
+            if (icon_cache.contains(name))
+                return icon_cache[name];
             QString cur_theme(QIcon::themeName());
             QIcon::setThemeName(selected_theme);
-            QIcon icon(QIcon::fromTheme(icon_names.at(row)));
+            QIcon icon(QIcon::fromTheme(name));
             QIcon::setThemeName(cur_theme);
+            icon_cache[name] = icon;
             return icon;
         }
         default:

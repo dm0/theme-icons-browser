@@ -2,14 +2,13 @@
 
 #include "icondelegate.h"
 
-IconDelegate::IconDelegate(QObject *parent): QStyledItemDelegate(parent)
+IconDelegate::IconDelegate(QObject *parent, QSize size_hint):
+    QStyledItemDelegate(parent),
+    item_size_hint(std::move(size_hint))
 {
-
 }
 
-QSize IconDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+QSize IconDelegate::sizeHint(const QStyleOptionViewItem &, const QModelIndex &) const
 {
-    QSize size = QStyledItemDelegate::sizeHint(option, index);
-    qDebug() << index.data(Qt::DisplayRole).toString() << "Size: " << size;
-    return size;
+    return item_size_hint;
 }
