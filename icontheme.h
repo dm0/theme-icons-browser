@@ -52,6 +52,12 @@ public:
      */
     static QStringList themes();
 
+	/**
+	 * @brief Add theme search path
+	 * @param path Path to themes directory
+	 */
+	static void add_themes_dir(const QString& path);
+
 protected:
     QStringList parent_themes; /**< parent theme name */
     QString theme_name; /**< theme name (directory name) */

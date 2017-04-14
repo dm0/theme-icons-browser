@@ -3,12 +3,11 @@
 #include <QFileInfo>
 #include <QSettings>
 #include <QDebug>
+#include <QIcon>
 
 #include "icontheme.h"
 
-static QStringList get_base_dirs();
-
-QStringList IconTheme::base_dirs = get_base_dirs();
+QStringList IconTheme::base_dirs = QIcon::themeSearchPaths();
 
 IconTheme::IconTheme(const QString &theme_name): theme_name(theme_name)
 {
@@ -24,6 +23,7 @@ IconTheme::IconTheme(const QString &theme_name): theme_name(theme_name)
     }
     // theme directory not found or doesn't contain index.theme file
     if (base_path.isNull()) {
+		qDebug() << "index.theme not found";
         return;
     }
     QSettings theme_index(base_path + "/index.theme", QSettings::IniFormat);
@@ -70,15 +70,13 @@ QStringList IconTheme::themes()
             themes += theme;
         }
     }
-    return themes.toList();
+	return themes.toList();
+}
+
+void IconTheme::add_themes_dir(const QString &path)
+{
+	base_dirs.append(path);
+	QIcon::setThemeSearchPaths(base_dirs);
 }
 
 
-static QStringList get_base_dirs() {
-    QStringList dirs;
-    for (const QString& dir: QString(qgetenv("XDG_DATA_DIRS")).split(':')) {
-        dirs.append(dir + "/icons");
-    }
-    dirs.append("/usr/share/pixmaps");
-    return dirs;
-}
