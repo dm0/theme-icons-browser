@@ -8,9 +8,14 @@
 ThemeIconsModel::ThemeIconsModel(QHash<QString, IconTheme> themes, const QString &theme_name,
                                  QObject *parent):
     QAbstractListModel(parent),
-	icon_themes(std::move(themes))
+    icon_themes(std::move(themes))
 {
-	set_current_theme(theme_name.isNull() ? QIcon::themeName() : theme_name);
+    set_current_theme(theme_name.isNull() ? QIcon::themeName() : theme_name);
+}
+
+ThemeIconsModel::ThemeIconsModel(QObject *parent): QAbstractListModel(parent)
+{
+
 }
 
 int ThemeIconsModel::rowCount(const QModelIndex &) const
@@ -39,26 +44,32 @@ QVariant ThemeIconsModel::data(const QModelIndex &index, int role) const
         }
         default:
             return QVariant();
-	}
+    }
+}
+
+void ThemeIconsModel::set_themes(const QHash<QString, IconTheme> &themes, const QString &theme_name)
+{
+    icon_themes=themes;
+    set_current_theme(theme_name.isNull() ? QIcon::themeName() : theme_name);
 }
 
 void ThemeIconsModel::set_current_theme(QString theme)
 {
-	if (!icon_themes.contains(theme) || theme == selected_theme) {
-		return;
-	}
-	beginResetModel();
-	selected_theme = theme;
-	icon_cache.clear();
-	// build list of icons from selected theme and parent themes
-	QSet<QString> theme_icons;
-	QStringList theme_chain{selected_theme};
-	for (int i = 0; i < theme_chain.size(); i++) {
-		const IconTheme &theme = icon_themes[theme_chain[i]];
-		theme_chain.append(theme.parents());
-		theme_icons.unite(QSet<QString>::fromList(theme.icons().keys()));
-	}
-	icon_names = theme_icons.toList();
-	qDebug() << "selected_theme: " << selected_theme;
-	endResetModel();
+    if (!icon_themes.contains(theme) || theme == selected_theme) {
+        return;
+    }
+    beginResetModel();
+    selected_theme = theme;
+    icon_cache.clear();
+    // build list of icons from selected theme and parent themes
+    QSet<QString> theme_icons;
+    QStringList theme_chain{selected_theme};
+    for (int i = 0; i < theme_chain.size(); i++) {
+        const IconTheme &theme = icon_themes[theme_chain[i]];
+        theme_chain.append(theme.parents());
+        theme_icons.unite(QSet<QString>::fromList(theme.icons().keys()));
+    }
+    icon_names = theme_icons.toList();
+    qDebug() << "selected_theme: " << selected_theme;
+    endResetModel();
 }

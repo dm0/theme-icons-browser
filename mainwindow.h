@@ -2,9 +2,13 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSettings>
+#include <QComboBox>
+
 
 #include "themeiconsmodel.h"
 #include "icondelegate.h"
+#include "settingsdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,10 +22,20 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+public slots:
+    void show_settings();
+
+protected:
+    void load_themes(QString current_theme);
+
 private:
     Ui::MainWindow *ui;
     ThemeIconsModel * model;
     IconDelegate * view_delegate;
+    SettingsDialog * settings_dialog = nullptr;
+    QSettings * settings;
+    QStringList default_theme_paths;
+    QComboBox * themes_combo;
 };
 
 #endif // MAINWINDOW_H

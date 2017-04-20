@@ -29,11 +29,16 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     icontheme.cpp \
     themeiconsmodel.cpp \
-    icondelegate.cpp
+    icondelegate.cpp \
+    settingsdialog.cpp \
+    directoryeditor.cpp
 
 HEADERS  += mainwindow.h \
     icontheme.h \
     themeiconsmodel.h \
-    icondelegate.h
+    icondelegate.h \
+    settingsdialog.h \
+    directoryeditor.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    settingsdialog.ui

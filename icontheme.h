@@ -44,6 +44,10 @@ public:
      */
     const QHash<QString, QSet<uint>> & icons() const { return theme_icons; }
 
+    /**
+     * @brief Return list of directories
+     * @return list of theme search directories
+     */
     const QVector<Directory> & dirs() const { return theme_dirs; }
 
     /**
@@ -52,11 +56,23 @@ public:
      */
     static QStringList themes();
 
-	/**
-	 * @brief Add theme search path
-	 * @param path Path to themes directory
-	 */
-	static void add_themes_dir(const QString& path);
+    /**
+     * @brief Add theme search path
+     * @param path Path to themes directory
+     */
+    static void add_themes_dir(const QString& path);
+
+    /**
+     * @brief Add several search paths at once
+     * @param paths Additional serach paths
+     */
+    static void add_themes_dirs(const QStringList& paths);
+
+    /**
+     * @brief Set theme search paths
+     * @param paths List of search paths
+     */
+    static void set_themes_dirs(const QStringList& paths);
 
 protected:
     QStringList parent_themes; /**< parent theme name */

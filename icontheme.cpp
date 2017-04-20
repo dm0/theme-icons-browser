@@ -23,7 +23,7 @@ IconTheme::IconTheme(const QString &theme_name): theme_name(theme_name)
     }
     // theme directory not found or doesn't contain index.theme file
     if (base_path.isNull()) {
-		qDebug() << "index.theme not found";
+        qDebug() << "index.theme not found";
         return;
     }
     QSettings theme_index(base_path + "/index.theme", QSettings::IniFormat);
@@ -70,13 +70,25 @@ QStringList IconTheme::themes()
             themes += theme;
         }
     }
-	return themes.toList();
+    return themes.toList();
 }
 
 void IconTheme::add_themes_dir(const QString &path)
 {
-	base_dirs.append(path);
-	QIcon::setThemeSearchPaths(base_dirs);
+    base_dirs.append(path);
+    QIcon::setThemeSearchPaths(base_dirs);
+}
+
+void IconTheme::add_themes_dirs(const QStringList &paths)
+{
+    base_dirs.append(paths);
+    QIcon::setThemeSearchPaths(base_dirs);
+}
+
+void IconTheme::set_themes_dirs(const QStringList &paths)
+{
+    base_dirs = paths;
+    QIcon::setThemeSearchPaths(base_dirs);
 }
 
 
