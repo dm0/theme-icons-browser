@@ -7,5 +7,17 @@
         <file>icons/built-in-theme/16/preferences-other-symbolic.svg</file>
         <file>icons/built-in-theme/24/preferences-other-symbolic.svg</file>
         <file>icons/built-in-theme/32/preferences-other-symbolic.svg</file>
+        <file>icons/built-in-theme/128/list-add.svg</file>
+        <file>icons/built-in-theme/128/list-remove.svg</file>
+        <file>icons/built-in-theme/16/list-add.svg</file>
+        <file>icons/built-in-theme/16/list-remove.svg</file>
+        <file>icons/built-in-theme/24/list-add.svg</file>
+        <file>icons/built-in-theme/24/list-remove.svg</file>
+        <file>icons/built-in-theme/32/list-add.svg</file>
+        <file>icons/built-in-theme/32/list-remove.svg</file>
+        <file>icons/built-in-theme/48/list-add.svg</file>
+        <file>icons/built-in-theme/48/list-remove.svg</file>
+        <file>icons/built-in-theme/64/list-add.svg</file>
+        <file>icons/built-in-theme/64/list-remove.svg</file>
     </qresource>
 </RCC>

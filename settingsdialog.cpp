@@ -1,5 +1,6 @@
 #include <QItemEditorFactory>
 #include <QFileDialog>
+#include <QDebug>
 
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
@@ -11,6 +12,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     settings(new QSettings(this)),
     model(new QStringListModel(this))
 {
+    qDebug() << "Current application theme" << QIcon::themeName();
     ui->setupUi(this);
     QItemEditorFactory *factory = new QItemEditorFactory;
 

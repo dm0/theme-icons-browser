@@ -60,6 +60,7 @@ void ThemeIconsModel::set_current_theme(QString theme)
     }
     beginResetModel();
     selected_theme = theme;
+    QIcon::setThemeName(selected_theme);
     icon_cache.clear();
     // build list of icons from selected theme and parent themes
     QSet<QString> theme_icons;
