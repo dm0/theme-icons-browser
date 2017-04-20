@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     settings(new QSettings(this))
 {
     if (QIcon::themeName().isNull())
-        QIcon::setThemeName("built-in");
+        QIcon::setThemeName("built-in-theme");
     ui->setupUi(this);
 
     default_theme_paths = QIcon::themeSearchPaths();
@@ -31,7 +31,13 @@ MainWindow::MainWindow(QWidget *parent) :
     view_delegate = new IconDelegate(ui->listView);
     view_delegate->set_size_hint({160, 128});
     ui->listView->setItemDelegate(view_delegate);
+
+    QWidget * expander = new QWidget(this);
+    expander->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Ignored);
+    ui->mainToolBar->addWidget(expander);
+
     QLineEdit * filter_edit = new QLineEdit(this);
+    filter_edit->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     filter_edit->setClearButtonEnabled(true);
     filter_edit->addAction(QIcon::fromTheme("view-filter-symbolic"),
                            QLineEdit::LeadingPosition);

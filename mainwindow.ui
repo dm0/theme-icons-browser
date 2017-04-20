@@ -81,6 +81,9 @@
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="settings_action">
+   <property name="icon">
+    <iconset theme="preferences-other-symbolic"/>
+   </property>
    <property name="text">
     <string>Settings</string>
    </property>

@@ -61,12 +61,14 @@ QStringList IconTheme::themes()
 {
     QSet<QString> themes;
     for (QDir dir: base_dirs) {
+        // skip embedded themes
+        if (dir.path().startsWith(':'))
+            continue;
         for (const QString& theme: dir.entryList(QDir::Dirs | QDir::Readable |
                                                  QDir::NoDotAndDotDot))
         {
-            if (!QFileInfo::exists(dir.filePath(theme + "/index.theme"))) {
+            if (!QFileInfo::exists(dir.filePath(theme + "/index.theme")))
                 continue;
-            }
             themes += theme;
         }
     }

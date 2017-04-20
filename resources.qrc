@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/built-in-theme/index.theme</file>
+        <file>icons/built-in-theme/16/view-filter-symbolic.svg</file>
+        <file>icons/built-in-theme/24/view-filter-symbolic.svg</file>
+        <file>icons/built-in-theme/32/view-filter-symbolic.svg</file>
+        <file>icons/built-in-theme/16/preferences-other-symbolic.svg</file>
+        <file>icons/built-in-theme/24/preferences-other-symbolic.svg</file>
+        <file>icons/built-in-theme/32/preferences-other-symbolic.svg</file>
+    </qresource>
+</RCC>

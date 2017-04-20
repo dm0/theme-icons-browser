@@ -42,3 +42,9 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     settingsdialog.ui
+
+RESOURCES += \
+    resources.qrc
+
+DISTFILES += \
+    icons/built-in-theme/index.theme

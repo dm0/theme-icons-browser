@@ -1,0 +1,21 @@
+[Icon Theme]
+Name=built-in
+Directories=16,24,32,48,64,128, scalable
+
+[16]
+Size=16
+
+[24]
+Size=24
+
+[32]
+Size=32
+
+[48]
+Size=48
+
+[64]
+Size=64
+
+[128]
+Size=128
