@@ -1,5 +1,6 @@
 #include <QIcon>
 #include <QSet>
+#include <QDir>
 
 #include <QDebug>
 
@@ -38,7 +39,7 @@ QVariant ThemeIconsModel::data(const QModelIndex &index, int role) const
             const QString &name = icon_names.at(row);
             if (icon_cache.contains(name))
                 return icon_cache[name];
-            QIcon icon(QIcon::fromTheme(name));
+            QIcon icon = icon_by_name(name);
             icon_cache[name] = icon;
             return icon;
         }
@@ -55,12 +56,11 @@ void ThemeIconsModel::set_themes(const QHash<QString, IconTheme> &themes, const 
 
 void ThemeIconsModel::set_current_theme(QString theme)
 {
-    if (!icon_themes.contains(theme) || theme == selected_theme) {
+    if (!icon_themes.contains(theme) || theme == selected_theme)
         return;
-    }
+
     beginResetModel();
     selected_theme = theme;
-    QIcon::setThemeName(selected_theme);
     icon_cache.clear();
     // build list of icons from selected theme and parent themes
     QSet<QString> theme_icons;
@@ -73,4 +73,27 @@ void ThemeIconsModel::set_current_theme(QString theme)
     icon_names = theme_icons.toList();
     qDebug() << "selected_theme: " << selected_theme;
     endResetModel();
+}
+
+QIcon ThemeIconsModel::icon_by_name(const QString &name) const
+{
+    QStringList theme_chain{selected_theme};
+    for (int i = 0; i < theme_chain.size(); i++) {
+        const IconTheme &theme = icon_themes[theme_chain[i]];
+        theme_chain.append(theme.parents());
+        if (!theme.icons().contains(name))
+            continue;
+        QIcon icon;
+        const QVector<IconTheme::Directory> &dirs = theme.dirs();
+        // load files
+        for (uint dir_id: theme.icons()[name]) {
+            QDir icon_dir(theme.path() + "/" + dirs[dir_id].path);
+            for (const QFileInfo &finfo: icon_dir.entryInfoList({name + ".*"})) {
+                icon.addFile(finfo.filePath());
+            }
+        }
+        return icon;
+    }
+    qDebug() << "Icon " << name << " not found";
+    return QIcon();
 }

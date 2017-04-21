@@ -82,7 +82,6 @@ void MainWindow::load_themes(QString current_theme)
     }
     if (current_theme.isNull() || !theme_list.contains(current_theme)) {
         current_theme = theme_list.value(0);
-        QIcon::setThemeName(current_theme);
     }
     model->set_themes(themes, current_theme);
     themes_combo->clear();

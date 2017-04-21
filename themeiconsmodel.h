@@ -20,6 +20,8 @@ public:
 public slots:
     void set_current_theme(QString theme);
 protected:
+    QIcon icon_by_name(const QString &name) const;
+
     QHash<QString, IconTheme> icon_themes;
     QList<QString> icon_names;
     QString selected_theme;

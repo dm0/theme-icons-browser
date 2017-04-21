@@ -46,9 +46,11 @@ public:
 
     /**
      * @brief Return list of directories
-     * @return list of theme search directories
+     * @return list of theme directories
      */
     const QVector<Directory> & dirs() const { return theme_dirs; }
+
+    const QString & path() const { return base_path; }
 
     /**
      * @brief Returns list of installed icon themes
