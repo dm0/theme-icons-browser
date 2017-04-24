@@ -9,10 +9,6 @@
 
 #include "icontheme.h"
 
-#include <sys/resource.h>
-#include <sys/time.h>
-#include <iostream>
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -54,16 +50,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->mainToolBar->addWidget(themes_combo);
 
     // following call changes current icon theme
-    struct rusage before, after;
-    getrusage(RUSAGE_SELF, &before);
     load_themes(QIcon::themeName());
-    for (int i = 0, len = model->rowCount(); i < len; i++)
-        model->data(model->index(i), Qt::DecorationRole);
-    getrusage(RUSAGE_SELF, &after);
-    double start_time = before.ru_utime.tv_sec + before.ru_utime.tv_usec * 1e-6;
-    double end_time = after.ru_utime.tv_sec + after.ru_utime.tv_usec * 1e-6;
-    std::cout << "time: " << end_time - start_time << std::endl;
-    std::cout << "Memory:" << (after.ru_maxrss - before.ru_maxrss) << std::endl;
 //    QMenu * view_type_menu = new QMenu(this);
 //    view_type_menu
 }
