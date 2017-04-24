@@ -77,6 +77,12 @@ void ThemeIconsModel::set_current_theme(QString theme)
 
 QIcon ThemeIconsModel::icon_by_name(const QString &name) const
 {
+    static const char * extensions[IconTheme::FileExtension::LENGTH] = {
+        "png",
+        "svg",
+        "xpm"
+    };
+
     QStringList theme_chain{selected_theme};
     for (int i = 0; i < theme_chain.size(); i++) {
         const IconTheme &theme = icon_themes[theme_chain[i]];
@@ -86,11 +92,13 @@ QIcon ThemeIconsModel::icon_by_name(const QString &name) const
         QIcon icon;
         const QVector<IconTheme::Directory> &dirs = theme.dirs();
         // load files
-        for (uint dir_id: theme.icons()[name]) {
-            QDir icon_dir(theme.path() + "/" + dirs[dir_id].path);
-            for (const QFileInfo &finfo: icon_dir.entryInfoList({name + ".*"})) {
-                icon.addFile(finfo.filePath());
-            }
+        for (const IconTheme::IconInfo& icon_info: theme.icons()[name]) {
+            QString file_path = QString("%1/%2/%3.%4")
+                    .arg(theme.path())
+                    .arg(dirs[icon_info.first].path)
+                    .arg(name)
+                    .arg(extensions[icon_info.second]);
+            icon.addFile(file_path);
         }
         return icon;
     }

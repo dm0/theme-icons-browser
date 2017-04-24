@@ -14,6 +14,16 @@ class IconTheme {
 
 public:
 
+
+    enum FileExtension: uchar {
+        PNG,
+        SVG,
+        XPM,
+        LENGTH
+    };
+    using IconInfo = std::pair<uint, FileExtension>;
+    using IconMapping = QHash<QString, QVector<IconInfo>>;
+
     /**
      * @brief The Directory struct stores information about single icons directory from theme
      */
@@ -42,7 +52,7 @@ public:
      * index of Directory object in the vector returned by the `dirs()` method.
      * @return Icon names to Directory indices
      */
-    const QHash<QString, QSet<uint>> & icons() const { return theme_icons; }
+    const IconMapping & icons() const { return theme_icons; }
 
     /**
      * @brief Return list of directories
@@ -82,7 +92,8 @@ protected:
     QString display_name; /**< theme display name */
     QString base_path; /**< path to the theme directory */
     QVector<Directory> theme_dirs; /**< theme directories */
-    QHash<QString, QSet<uint>> theme_icons; /**< theme icons (names) to directories mapping */
+    /** theme icons (names) to directories and extensions mapping */
+    IconMapping theme_icons;
     static QStringList base_dirs; /**< base directories */
 };
 

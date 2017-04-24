@@ -52,7 +52,13 @@ IconTheme::IconTheme(const QString &theme_name): theme_name(theme_name)
         QDir dir(base_path + "/" + theme_dirs[i].path);
         for (const QFileInfo &icon: dir.entryInfoList({"*.png", "*.svg", "*.xpm"}, QDir::Files | QDir::Readable)) {
             QString icon_name = icon.completeBaseName();
-            theme_icons[icon_name] += static_cast<uint>(i);
+            QString ext = icon.suffix();
+            FileExtension ext_type = FileExtension::XPM;
+            if (ext == "png")
+                ext_type = FileExtension::PNG;
+            else if (ext == "svg")
+                ext_type = FileExtension::SVG;
+            theme_icons[icon_name].append(std::pair<uint, FileExtension>{i, ext_type});
         }
     }
 }
