@@ -37,6 +37,8 @@ QVariant ThemeIconsModel::data(const QModelIndex &index, int role) const
             return icon_names.at(row);
         case Qt::DecorationRole: {
             const QString &name = icon_names.at(row);
+            // TODO: implement cache with limited amount of memory
+            // TODO: implement async loading
             if (icon_cache.contains(name))
                 return icon_cache[name];
             QIcon icon = icon_by_name(name);
