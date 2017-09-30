@@ -79,6 +79,9 @@ void ThemeIconsModel::set_current_theme(QString theme)
 
 QIcon ThemeIconsModel::icon_by_name(const QString &name) const
 {
+    static_assert(IconTheme::FileExtension::PNG == 0, "IconTheme::FileExtension::PNG != 0");
+    static_assert(IconTheme::FileExtension::SVG == 1, "IconTheme::FileExtension::SVG != 1");
+    static_assert(IconTheme::FileExtension::XPM == 2, "IconTheme::FileExtension::XPM != 2");
     static const char * extensions[IconTheme::FileExtension::LENGTH] = {
         "png",
         "svg",
