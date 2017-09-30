@@ -1,6 +1,7 @@
 #include <QStyledItemDelegate>
 #include <QSortFilterProxyModel>
 #include <QLineEdit>
+#include <QToolButton>
 
 #include <QDebug>
 
@@ -17,6 +18,17 @@ MainWindow::MainWindow(QWidget *parent) :
     if (QIcon::themeName().isNull())
         QIcon::setThemeName("built-in-theme");
     ui->setupUi(this);
+
+    QMenu * view_type_menu = new QMenu(this);
+    view_type_menu->setIcon(QIcon::fromTheme("view-grid"));
+    view_type_menu->addAction(QIcon::fromTheme("view-list"), "List view");
+    view_type_menu->addAction(QIcon::fromTheme("view-grid"), "Grid view");
+    QToolButton * view_type_button = new QToolButton();
+    connect(view_type_menu, &QMenu::triggered, view_type_button, &QToolButton::setDefaultAction);
+    view_type_button->setMenu(view_type_menu);
+    view_type_button->setDefaultAction(view_type_menu->actions()[0]);
+    view_type_button->setPopupMode(QToolButton::InstantPopup);
+    ui->mainToolBar->addWidget(view_type_button);
 
     default_theme_paths = QIcon::themeSearchPaths();
     IconTheme::add_themes_dirs(settings->value("additional-theme-dirs").toStringList());
@@ -49,10 +61,7 @@ MainWindow::MainWindow(QWidget *parent) :
             model, &ThemeIconsModel::set_current_theme);
     ui->mainToolBar->addWidget(themes_combo);
 
-    // following call changes current icon theme
     load_themes(QIcon::themeName());
-//    QMenu * view_type_menu = new QMenu(this);
-//    view_type_menu
 }
 
 MainWindow::~MainWindow()
