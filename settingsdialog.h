@@ -30,9 +30,9 @@ protected:
     void load_config();
 
 private:
-	Ui::SettingsDialog *ui;
-    QSettings * settings;
-    QStringListModel * model;
+    Ui::SettingsDialog *ui;
+    QSettings *settings;
+    QStringListModel *model;
 };
 
 #endif // SETTINGSDIALOG_H
