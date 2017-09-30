@@ -80,9 +80,16 @@
    <addaction name="settings_action"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="dockWidget">
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents"/>
+  </widget>
   <action name="settings_action">
    <property name="icon">
-    <iconset theme="preferences-other-symbolic"/>
+    <iconset theme="preferences-other-symbolic">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Settings</string>
