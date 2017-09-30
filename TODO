@@ -1,0 +1,13 @@
+User interface:
+
+  □ Display available sizes of selected icon @created(17-09-30 21:29)
+  □ Display themes selected icon can be found in @created(17-09-30 21:29)
+  □ Display variants of the selected icon in other themes @created(17-09-30 21:29)
+  □ Display icon name that can be used with `icon_by_name` @created(17-09-30 21:29)
+  □ Support different view types (list & grid) @created(17-09-30 21:30)
+  □ Make theme selection more obvious (consider adding text) @created(17-09-30 21:33)
+
+Features:
+  □ Create own themes suitable for embedding in Qt projects @created(17-09-30 21:30)
+  □ Manage created themes @created(17-09-30 21:30)
+    □ Consider using Qt resources file as a theme project @created(17-09-30 21:30)
