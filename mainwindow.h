@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QSettings>
 #include <QComboBox>
+#include <QItemSelection>
 
 
 #include "themeiconsmodel.h"
@@ -27,6 +28,7 @@ public slots:
 
 protected:
     void load_themes(QString current_theme);
+    void selection_changed(const QItemSelection &current, const QItemSelection &prev);
 
 private:
     Ui::MainWindow *ui;

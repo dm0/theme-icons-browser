@@ -44,6 +44,9 @@ MainWindow::MainWindow(QWidget *parent) :
     view_delegate->set_size_hint({160, 128});
     ui->listView->setItemDelegate(view_delegate);
 
+    connect(ui->listView->selectionModel(), &QItemSelectionModel::selectionChanged,
+            this, &MainWindow::selection_changed);
+
     QWidget * expander = new QWidget(this);
     expander->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Ignored);
     ui->mainToolBar->addWidget(expander);
@@ -96,4 +99,18 @@ void MainWindow::load_themes(QString current_theme)
     themes_combo->clear();
     themes_combo->addItems(theme_list);
     themes_combo->setCurrentText(current_theme);
+}
+
+void MainWindow::selection_changed(const QItemSelection &current, const QItemSelection &prev)
+{
+    QModelIndexList indexes = current.indexes();
+    if (indexes.size() == 0) {
+        ui->icon_name->setText("");
+        ui->icon_sizes->setText("");
+    } else {
+        const QModelIndex &selected = indexes.at(0);
+        QAbstractItemModel * model = ui->listView->model();
+        ui->icon_name->setText(model->data(selected, Qt::DisplayRole).toString());
+        ui->icon_sizes->setText(model->data(selected, ThemeIconsModel::IconSizesRole).toString());
+    }
 }
