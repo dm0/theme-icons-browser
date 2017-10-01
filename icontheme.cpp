@@ -60,7 +60,7 @@ IconTheme::IconTheme(const QString &theme_name): theme_name(theme_name)
                 ext_type = FileExtension::PNG;
             else if (ext == "svg")
                 ext_type = FileExtension::SVG;
-            theme_icons[icon_name].append(std::pair<uint, FileExtension>{i, ext_type});
+            theme_icons[icon_name].append({static_cast<uint>(i) , ext_type});
         }
     }
 }

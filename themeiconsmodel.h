@@ -11,6 +11,10 @@ class ThemeIconsModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
+    enum Roles {
+        IconSizesRole = Qt::UserRole
+    };
+
     ThemeIconsModel(QHash<QString, IconTheme> themes, const QString &theme_name=QString(),
                     QObject *parent=nullptr);
     ThemeIconsModel(QObject *parent=nullptr);
@@ -20,7 +24,16 @@ public:
 public slots:
     void set_current_theme(QString theme);
 protected:
+    struct IconInfo {
+        IconInfo(const IconTheme &theme, const QVector<IconTheme::IconFileInfo> &info):
+            theme(theme), icon_files_info(info) {}
+        const IconTheme &theme;
+        const QVector<IconTheme::IconFileInfo> &icon_files_info;
+    };
+
     QIcon icon_by_name(const QString &name) const;
+    QString get_icon_theme(const QString &name) const;
+    QStringList get_icon_theme_chain(const QString &name) const;
 
     QHash<QString, IconTheme> icon_themes;
     QList<QString> icon_names;

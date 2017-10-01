@@ -14,15 +14,24 @@ class IconTheme {
 
 public:
 
-
+    /**
+     * @brief Supported file extensions
+     */
     enum FileExtension: uchar {
         PNG,
         SVG,
         XPM,
         LENGTH
     };
-    using IconInfo = std::pair<uint, FileExtension>;
-    using IconMapping = QHash<QString, QVector<IconInfo>>;
+
+    /**
+     * @brief Icon file information
+     */
+    struct IconFileInfo {
+        uint directory_index; /**< Directory index */
+        FileExtension extension; /**< Icon file extension (name is already known */
+    };
+    using IconMapping = QHash<QString, QVector<IconFileInfo>>; /**< icon name to IconInfo mapping */
 
     /**
      * @brief The Directory struct stores information about single icons directory from theme
@@ -60,6 +69,10 @@ public:
      */
     const QVector<Directory> & dirs() const { return theme_dirs; }
 
+    /**
+     * @brief Base theme path
+     * @return base theme path
+     */
     const QString & path() const { return base_path; }
 
     /**

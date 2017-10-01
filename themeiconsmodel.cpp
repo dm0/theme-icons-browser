@@ -45,6 +45,25 @@ QVariant ThemeIconsModel::data(const QModelIndex &index, int role) const
             icon_cache[name] = icon;
             return icon;
         }
+        case IconSizesRole: {
+            const QString &name = icon_names.at(row);
+            QString icon_theme_name = get_icon_theme(name);
+            if (icon_theme_name.isNull())
+                return QVariant();
+            const IconTheme &theme = icon_themes[icon_theme_name];
+            const QVector<IconTheme::Directory> &dirs = theme.dirs();
+
+            QStringList sizes;
+            for (const IconTheme::IconFileInfo& icon_info: theme.icons()[name]) {
+                const IconTheme::Directory &dir = dirs.at(icon_info.directory_index);
+                if (dir.scale > 1) {
+                    sizes.append(QString("%1x%1@%2x").arg(dir.size).arg(dir.scale));
+                } else {
+                    sizes.append(QString("%1x%1").arg(dir.size));
+                }
+            }
+            return sizes.join(", ");
+        }
         default:
             return QVariant();
     }
@@ -88,25 +107,48 @@ QIcon ThemeIconsModel::icon_by_name(const QString &name) const
         "xpm"
     };
 
+    QIcon icon;
+    QString icon_theme_name = get_icon_theme(name);
+    if (icon_theme_name.isNull())
+        return icon;
+    const IconTheme &theme = icon_themes[icon_theme_name];
+    const QVector<IconTheme::Directory> &dirs = theme.dirs();
+
+    for (const IconTheme::IconFileInfo& icon_info: theme.icons()[name]) {
+        QString file_path = QString("%1/%2/%3.%4")
+                .arg(theme.path())
+                .arg(dirs[icon_info.directory_index].path)
+                .arg(name)
+                .arg(extensions[icon_info.extension]);
+        icon.addFile(file_path);
+    }
+    return icon;
+}
+
+QString ThemeIconsModel::get_icon_theme(const QString &name) const
+{
     QStringList theme_chain{selected_theme};
     for (int i = 0; i < theme_chain.size(); i++) {
         const IconTheme &theme = icon_themes[theme_chain[i]];
         theme_chain.append(theme.parents());
         if (!theme.icons().contains(name))
             continue;
-        QIcon icon;
-        const QVector<IconTheme::Directory> &dirs = theme.dirs();
-        // load files
-        for (const IconTheme::IconInfo& icon_info: theme.icons()[name]) {
-            QString file_path = QString("%1/%2/%3.%4")
-                    .arg(theme.path())
-                    .arg(dirs[icon_info.first].path)
-                    .arg(name)
-                    .arg(extensions[icon_info.second]);
-            icon.addFile(file_path);
-        }
-        return icon;
+        return theme_chain[i];
     }
-    qDebug() << "Icon " << name << " not found";
-    return QIcon();
+    qWarning() << "Icon " << name << " not found";
+    return QString();
+}
+
+QStringList ThemeIconsModel::get_icon_theme_chain(const QString &name) const
+{
+    QStringList chain;
+    QStringList theme_chain{selected_theme};
+    for (int i = 0; i < theme_chain.size(); i++) {
+        const IconTheme &theme = icon_themes[theme_chain[i]];
+        theme_chain.append(theme.parents());
+        if (!theme.icons().contains(name))
+            continue;
+        chain.append(theme_chain[i]);
+    }
+    return chain;
 }
