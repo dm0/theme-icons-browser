@@ -37,11 +37,18 @@ IconTheme::IconTheme(const QString &theme_name): theme_name(theme_name)
     for (const QString &dir: dir_list) {
         theme_index.beginGroup(dir);
         int size = theme_index.value("Size", 0).toInt();
+        QString dir_type = theme_index.value("Type", "Threshold").toString();
+        Directory::Type type = Directory::Type::Fixed;
+        if (dir_type == "Scalable") {
+            type = Directory::Type::Scalable;
+        } else if (dir_type == "Threshold") {
+            type = Directory::Type::Threshold;
+        }
         theme_dirs.append(Directory{
             size,
             theme_index.value("Scale", 1).toInt(),
             theme_index.value("Context", "").toString(),
-            theme_index.value("Type", "Threshold").toString(),
+            type,
             theme_index.value("MaxSize", size).toInt(),
             theme_index.value("MinSize", size).toInt(),
             theme_index.value("Threshold", 2).toInt(),

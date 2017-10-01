@@ -40,7 +40,12 @@ public:
         int size; /**< icon size */
         int scale; /**< icon scale */
         QString context; /**< icon context */
-        QString type; /**< type of icon sizes: Fixed, Scalable and Threshold */
+        /**
+         * @brief Type of icon sizes in the directory
+         */
+        enum class Type: uint {
+            Fixed, Scalable, Threshold
+        } type;
         int max_size; /**< max size of Scalable icon */
         int min_size; /**< min size of Scalable icon */
         int threshold; /**< Threshold of a "Threshold" type icon */
