@@ -10,6 +10,9 @@ User interface:
   □ Display current icon status (fall-back or in-theme) @created(17-10-01 22:05)
   □ Display corresponfing information if icon is scalable @created(17-10-01 22:06)
 
+Implementation:
+  □ Use own QVariant type to return all icon information at once (prevents multiple calls)
+
 Features:
   □ Create own themes suitable for embedding in Qt projects @created(17-09-30 21:30)
   □ Manage created themes @created(17-09-30 21:30)
