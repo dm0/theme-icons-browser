@@ -31,6 +31,8 @@ IconTheme::IconTheme(const QString &theme_name): theme_name(theme_name)
     display_name = theme_index.value("Name").toString();
     parent_themes = theme_index.value("Inherits").toStringList();
     QStringList dir_list = theme_index.value("Directories").toStringList();
+    theme_index.endGroup();
+
     theme_dirs.reserve(dir_list.size());
     for (const QString &dir: dir_list) {
         theme_index.beginGroup(dir);
