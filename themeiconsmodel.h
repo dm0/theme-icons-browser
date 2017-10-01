@@ -24,12 +24,6 @@ public:
 public slots:
     void set_current_theme(QString theme);
 protected:
-    struct IconInfo {
-        IconInfo(const IconTheme &theme, const QVector<IconTheme::IconFileInfo> &info):
-            theme(theme), icon_files_info(info) {}
-        const IconTheme &theme;
-        const QVector<IconTheme::IconFileInfo> &icon_files_info;
-    };
 
     QIcon icon_by_name(const QString &name) const;
     QString get_icon_theme(const QString &name) const;
