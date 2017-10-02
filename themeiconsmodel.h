@@ -18,7 +18,7 @@ public:
      * @brief Data roles
      */
     enum Roles {
-        IconSizesRole = Qt::UserRole /**< Icon sizes role */
+        IconInfoRole = Qt::UserRole /**< Icon information role */
     };
 
     /**
@@ -27,6 +27,8 @@ public:
     struct IconInfo {
         QString name; /**< Icon name */
         QStringList sizes; /**< Icon sizes */
+        QStringList contexts; /**< Icon contexts **/
+        QStringList themes; /**< Icon themes **/
     };
 
     ThemeIconsModel(QHash<QString, IconTheme> themes, const QString &theme_name=QString(),

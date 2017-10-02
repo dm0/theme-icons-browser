@@ -110,7 +110,8 @@ void MainWindow::selection_changed(const QItemSelection &current, const QItemSel
     } else {
         const QModelIndex &selected = indexes.at(0);
         QAbstractItemModel * model = ui->listView->model();
-        ui->icon_name->setText(model->data(selected, Qt::DisplayRole).toString());
-        ui->icon_sizes->setText(model->data(selected, ThemeIconsModel::IconSizesRole).toString());
+        const ThemeIconsModel::IconInfo &info = model->data(selected, ThemeIconsModel::IconInfoRole).value<ThemeIconsModel::IconInfo>();
+        ui->icon_name->setText(info.name);
+        ui->icon_sizes->setText(info.sizes.join(", "));
     }
 }

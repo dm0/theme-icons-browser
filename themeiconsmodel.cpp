@@ -45,7 +45,7 @@ QVariant ThemeIconsModel::data(const QModelIndex &index, int role) const
             icon_cache[name] = icon;
             return icon;
         }
-        case IconSizesRole: {
+        case IconInfoRole: {
             const QString &name = icon_names.at(row);
             QString icon_theme_name = get_icon_theme(name);
             if (icon_theme_name.isNull())
@@ -56,13 +56,19 @@ QVariant ThemeIconsModel::data(const QModelIndex &index, int role) const
             QStringList sizes;
             for (const IconTheme::IconFileInfo& icon_info: theme.icons()[name]) {
                 const IconTheme::Directory &dir = dirs.at(icon_info.directory_index);
-                if (dir.scale > 1) {
-                    sizes.append(QString("%1x%1@%2x").arg(dir.size).arg(dir.scale));
+                QString size;
+                if (dir.type == IconTheme::Directory::Type::Scalable) {
+                    size = QString("[%1-%2]").arg(dir.min_size).arg(dir.max_size);
                 } else {
-                    sizes.append(QString("%1x%1").arg(dir.size));
+                    size = QString("%1x%1").arg(dir.size);
+                }
+                if (dir.scale > 1) {
+                    sizes.append(QString("%1@%2x").arg(size).arg(dir.scale));
+                } else {
+                    sizes.append(size);
                 }
             }
-            return sizes.join(", ");
+            return QVariant::fromValue(IconInfo{name, sizes});
         }
         default:
             return QVariant();
