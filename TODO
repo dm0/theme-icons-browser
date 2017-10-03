@@ -19,4 +19,4 @@ Features:
     □ Consider using Qt resources file as a theme project @created(17-09-30 21:30)
 
 Documentation:
-  □ Document ThemeIconsModel class
+  √ Document ThemeIconsModel class @done (17-10-03 09:01)
