@@ -47,13 +47,14 @@ QVariant ThemeIconsModel::data(const QModelIndex &index, int role) const
         }
         case IconInfoRole: {
             const QString &name = icon_names.at(row);
-            QString icon_theme_name = get_icon_theme(name);
-            if (icon_theme_name.isNull())
+            QStringList icon_theme_names = get_icon_theme_chain(name);
+            if (icon_theme_names.isEmpty())
                 return QVariant();
-            const IconTheme &theme = icon_themes[icon_theme_name];
+            const IconTheme &theme = icon_themes[icon_theme_names.at(0)];
             const QVector<IconTheme::Directory> &dirs = theme.dirs();
 
             QStringList sizes;
+            QSet<QString> contexts;
             for (const IconTheme::IconFileInfo& icon_info: theme.icons()[name]) {
                 const IconTheme::Directory &dir = dirs.at(icon_info.directory_index);
                 QString size;
@@ -67,8 +68,9 @@ QVariant ThemeIconsModel::data(const QModelIndex &index, int role) const
                 } else {
                     sizes.append(size);
                 }
+                contexts.insert(dir.context);
             }
-            return QVariant::fromValue(IconInfo{name, sizes});
+            return QVariant::fromValue(IconInfo{name, sizes, contexts.toList(), icon_theme_names});
         }
         default:
             return QVariant();

@@ -101,17 +101,22 @@ void MainWindow::load_themes(QString current_theme)
     themes_combo->setCurrentText(current_theme);
 }
 
-void MainWindow::selection_changed(const QItemSelection &current, const QItemSelection &prev)
+void MainWindow::selection_changed(const QItemSelection &current, const QItemSelection &)
 {
     QModelIndexList indexes = current.indexes();
     if (indexes.size() == 0) {
-        ui->icon_name->setText("");
-        ui->icon_sizes->setText("");
+        ui->icon_name->setText("-");
+        ui->icon_sizes->setText("-");
+        ui->icon_themes->setText("-");
+        ui->icon_contexts->setText("-");
     } else {
         const QModelIndex &selected = indexes.at(0);
         QAbstractItemModel * model = ui->listView->model();
-        const ThemeIconsModel::IconInfo &info = model->data(selected, ThemeIconsModel::IconInfoRole).value<ThemeIconsModel::IconInfo>();
+        const ThemeIconsModel::IconInfo &info =
+            model->data(selected, ThemeIconsModel::IconInfoRole).value<ThemeIconsModel::IconInfo>();
         ui->icon_name->setText(info.name);
         ui->icon_sizes->setText(info.sizes.join(", "));
+        ui->icon_themes->setText(info.themes.join(", "));
+        ui->icon_contexts->setText(info.contexts.join(", "));
     }
 }
